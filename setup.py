@@ -2,14 +2,19 @@ from distutils.core import setup
 setup(
   name = 'insightsearch',         # How you named your package folder (MyLib)
   packages = ['insightsearch'],   # Chose the same as "name"
-  version = '0.1',      # Start with a small number and increase it with every change you make
+  version = '0.2',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Insightsearch will show hidden sentiments, aspects and their opinions from your text data. It will show what people are talking about your product/service',   # Give a short description about your library
   author = 'Vivek alex',                   # Type in your name
   author_email = 'vivekalexktr@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/user/reponame',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/vivekalex61/insightsearch/archive/refs/tags/v0.2.tar.gz',  
   keywords = ['NLP', 'INSIGHT', 'REVIEW ANALYZER','REVIEW'],   # Keywords that define your package best
+  project_urls={
+         
+          'Source Code': 'https://github.com/vivekalex61/insightsearch',
+        
+      },
   install_requires=[
           'transformers',
           'spacy',
