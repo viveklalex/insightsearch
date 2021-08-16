@@ -3,7 +3,7 @@ from collections import Counter
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from textblob import TextBlob
-from sentiment_analyze import *
+from insightsearch.sentiment_analyze import *
 
 
 

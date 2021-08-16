@@ -1,5 +1,5 @@
 import pandas as pd
-from data_clean import  DataframeClean
+from insightsearch.data_clean import  DataframeClean
 
 
 class DFvalid:

@@ -1,5 +1,5 @@
 import spacy
-from aspect_analyze import *
+from insightsearch.aspect_analyze import *
 nlp = spacy.load("en_core_web_lg")
 import regex as re
 

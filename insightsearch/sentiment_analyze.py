@@ -198,7 +198,7 @@ class Sentimentanalyze:
                                    name='number of Positive reviews per week')
                 data_month = [monthly_plot_negative, monthly_plot_positive]
                 fig3 = go.Figure(data=data_month, layout=layout_month)
-
+                fig3.show()
                 self.figures_to_html([fig1, fig2, fig3,self.fig_aspect])
 
             except:

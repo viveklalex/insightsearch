@@ -1,5 +1,5 @@
-from data_clean import *
-from dataframe_checking import *
+from insightsearch.data_clean import *
+from insightsearch.dataframe_checking import *
 from pathlib import Path
 
 class Analysis(DataframeClean):
