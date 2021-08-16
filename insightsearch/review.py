@@ -17,10 +17,4 @@ class Analysis(DataframeClean):
         self.showing_sentiment()
 
 
-a = Analysis(
-    str(Path(__file__).parent.parent) +'/saved/All_Beauty_5.csv',
-    "reviewText",
-    "reviewTime",False
-)
 
-a.review_analyze()
