@@ -2,14 +2,22 @@ import spacy
 from insightsearch.aspect_analyze import *
 nlp = spacy.load("en_core_web_lg")
 import regex as re
+import nltk
+import os
 
+if not os.path.exist(str(Path(__file__).parent) +'/saved/corpora/wordnet'):
+	nltk.download('wordnet', download_dir=str(Path(__file__).parent) +'/saved')
+else:
+     nltk.data.path.append(str(Path(__file__).parent) +'/saved/corpora/wordnet')
+from nltk.stem import WordNetLemmatizer
 
 class DataframeClean(Aspectanalyze):
-    def __init__(self, file, column_name, date_column,bert):
+    def __init__(self, file, column_name, date_column,vader):
         self.file = file
         self.column_name = column_name
         self.date_column = date_column
-        self.bert=bert
+        self.vader=vader
+        self.wnl = WordNetLemmatizer()
 
         self.common_titles = [
             "mr",
@@ -211,13 +219,14 @@ class DataframeClean(Aspectanalyze):
         ]
 
     @staticmethod
-    def stop_words_removal(x, common_titles):
+    def stop_words_removal(x, common_titles,wnl):
 
 
         # listing person names
         people = [w.text for w in nlp(x).ents if w.label_ == "PERSON"]
-        stopwords = common_titles + people  # +list(stop_words)
-        text_wp = (" ").join([w for w in x.lower().split() if w not in stopwords])
+        stopwords = common_titles + people 
+        text_lz= (" ").join([wnl.lemmatize(w) for w in x.lower().split()])
+        text_wp = (" ").join([w for w in text_lz.lower().split() if w not in stopwords])
         text_wp = re.sub(r"[^\w\s]", "", text_wp).lower()
 
         return text_wp
@@ -228,7 +237,7 @@ class DataframeClean(Aspectanalyze):
 
         clean_df["reviewText"] = (
             clean_df["reviewText"]
-            .apply(lambda x: self.stop_words_removal(x, self.common_titles))
+            .apply(lambda x: self.stop_words_removal(x, self.common_titles,self.wnl))
             .dropna()
         )
      
@@ -244,5 +253,5 @@ class DataframeClean(Aspectanalyze):
               )
 
         Aspectanalyze.__init__(self, clean_df, self.column_name)
-        Sentimentanalyze.__init__(self, clean_df, self.column_name, self.date_column,self.bert)
+        Sentimentanalyze.__init__(self, clean_df, self.column_name, self.date_column,self.vader)
         return clean_df

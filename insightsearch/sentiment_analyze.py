@@ -1,104 +1,44 @@
-import tensorflow as tf
-from transformers import InputExample, InputFeatures, BertConfig,BertTokenizer, TFBertForSequenceClassification
 import os
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 from pathlib import Path
 from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from tqdm import tqdm
 
+analyser = SentimentIntensityAnalyzer()
 class Sentimentanalyze:
-    def __init__(self,clean_df, column_name,date_column,bert):
+    def __init__(self,clean_df, column_name,date_column,vader):
         self.clean_df=clean_df
         self.column_name=column_name
         self.date_column=date_column
-        self.bert=bert
+        self.vader=vader
 
 
-    def _model_init(self):
-        # bert_tokenizer
 
-        # model configuration for bert-base-cased
-
-        if not os.path.exists(str(Path(__file__).parent)+'/saved/config.json'):
-            model_config = BertConfig.from_pretrained('bert-base-uncased')
-            model_config.output_hidden_states = True
-            model_config.save_pretrained(str(Path(__file__).parent)+'/saved')
-
-        else:
-            print('loading the saved model_config')
-            model_config = BertConfig.from_pretrained(str(Path(__file__).parent)+'/saved')
-            model_config.output_hidden_states = True
-
-        if not os.path.exists(str(Path(__file__).parent)+'/saved/tf_model.h5'):
-            # Path('./trained-weights').mkdir(parents=True, exist_ok=True)
-            bert_model = TFBertForSequenceClassification.from_pretrained("bert-base-uncased")
-            bert_model.save_pretrained(str(Path(__file__).parent)+'/saved')
-        else:
-            print('loading the saved pretrained model')
-            bert_model = TFBertForSequenceClassification.from_pretrained(str(Path(__file__).parent)+'/saved')
-
-
-        bert_model.load_weights(str(Path(__file__).parent)+'/saved/sentiment.h5')
-
-        return bert_model
-
-    def _tokenizer_bert(self):
-        if not os.path.exists(str(Path(__file__).parent)+'/saved/vocab.txt'):
-
-            tz = BertTokenizer.from_pretrained("bert-base-uncased")
-            tz.save_pretrained(str(Path(__file__).parent)+'/saved')
-
-
-        else:
-            print('loading the saved pretrained tokenizer')
-            tz = BertTokenizer.from_pretrained(str(Path(__file__).parent)+'/saved')
-
-        return tz
-
-    def _tokenize_text(self, text, tz):
-
-        encoded = tz.encode_plus(
-            text=text,  # the sentence to be encoded
-            add_special_tokens=True,  # Add [CLS] and [SEP]
-            max_length=256,  # maximum length of a sentence
-            pad_to_max_length=True,  # Add [PAD]s
-            return_attention_mask=True,  # Generate the attention mask
-            truncation=True,
-            return_tensors='tf')
-
-        return encoded
-
-    # loading and saving tfbert
     @staticmethod
     def _prediction_textblob(text):
-        return 0 if (TextBlob(text).sentiment.polarity < 0)else 1
+        return 0 if (TextBlob(text).sentiment.polarity <= 0)else 1
 
+    @staticmethod
+    def _prediction_vader(text):
+        sentiment_score = analyser.polarity_scores(text)
 
-    def _prediction_bert(self, input_sentences, model, tk):
-
-
-
-        tf_outputs = model(tk)
-
-        tf_predictions = tf.nn.softmax(tf_outputs[0], axis=-1)
-        labels = ['Negative', 'Positive']
-        label = tf.argmax(tf_predictions, axis=1)
-        label = label.numpy()
-        return int(label)
+        return 1 if (sentiment_score['compound']  >= 0.05 ) else 0
 
     def showing_sentiment(self):
         df1 = self.clean_df.copy()
-        if self.bert == True:
+        if self.vader== False:
+            tqdm.pandas(desc="Applying sentiment scores using TextBlob classifier")
+            df1['sentiment'] = df1['reviewText'].progress_apply(self._prediction_textblob)
 
-                model = self._model_init()
-                tz = self._tokenizer_bert()
 
-                df1['sent_bert'] = df1['reviewText'].apply(lambda x: self._prediction_bert(x, model, self._tokenize_text(x, tz)))
 
         else:
+                tqdm.pandas(desc="Applying sentiment scores using Vader classifier")
 
-                df1['sentiment']=df1['reviewText'].apply(self._prediction_textblob)
+                df1['sentiment']=df1['reviewText'].progress_apply(self._prediction_vader)
 
         fig1 = go.Figure(data=[go.Pie(labels=['positive', 'negative'],name="overall sentiments", values=df1['sentiment'].value_counts())],layout=go.Layout(
         title=go.layout.Title(text="Overall Sentiment Analysis")
@@ -106,13 +46,14 @@ class Sentimentanalyze:
 
         fig1.update_traces(marker=dict(colors=px.colors.sequential.Agsunset , line=dict(color='#000000', width=2)))
 
-        if self.date_column is not None:
+        if self.date_column != None:
             try:
-                df_week = df1.groupby([pd.Grouper(key='reviewTime', freq='W'), 'sentiment']).size().unstack()
+
+                df_week = df1.groupby([pd.Grouper(key=str(self.date_column), freq='W'), 'sentiment']).size().unstack()
                 data_week = pd.DataFrame(
                     {'date': (df_week.index), 'negative': (df_week[0].values), 'positive': (df_week[1].values)})
 
-                df_month = df1.groupby([pd.Grouper(key='reviewTime', freq='M'), 'sentiment']).size().unstack()
+                df_month = df1.groupby([pd.Grouper(key=str(self.date_column), freq='M'), 'sentiment']).size().unstack()
                 data_month = pd.DataFrame(
                     {'date': (df_month.index), 'negative': (df_month[0].values), 'positive': (df_month[1].values)})
 
@@ -198,10 +139,13 @@ class Sentimentanalyze:
                                    name='number of Positive reviews per week')
                 data_month = [monthly_plot_negative, monthly_plot_positive]
                 fig3 = go.Figure(data=data_month, layout=layout_month)
-                fig3.show()
                 self.figures_to_html([fig1, fig2, fig3,self.fig_aspect])
 
             except:
+                    print('Date column is invalid')
+
+        else:
+
                     self.figures_to_html([fig1,self.fig_aspect])
 
     @staticmethod
