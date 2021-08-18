@@ -4,7 +4,7 @@ readme_path=(pathlib.Path(__file__).parent / "README.md").read_text()
 setup(
   name = 'insightsearch',         # How you named your package folder (MyLib)
   packages = ['insightsearch'],   # Chose the same as "name"
-  version = '0.6',      # Start with a small number and increase it with every change you make
+  version = '0.7',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   long_description=readme_path,
   long_description_content_type="text/markdown",
@@ -12,7 +12,7 @@ setup(
   author = 'Vivek alex',                   # Type in your name
   author_email = 'vivekalexktr@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/vivekalex61/insightsearch',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/vivekalex61/insightsearch/archive/refs/tags/v0.6.tar.gz',  
+  download_url = 'https://github.com/vivekalex61/insightsearch/archive/refs/tags/v0.7.tar.gz',  
   keywords = ['NLP', 'INSIGHT', 'REVIEW ANALYZER','REVIEW'],   # Keywords that define your package best
   project_urls={
          
