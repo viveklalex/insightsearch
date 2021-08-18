@@ -1,4 +1,4 @@
-from data_clean import *
+from insightseaarch.data_clean import *
 from insightsearch.dataframe_checking import *
 from pathlib import Path
 
