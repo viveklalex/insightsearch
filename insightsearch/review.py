@@ -18,9 +18,4 @@ class Analysis(DataframeClean):
 
 
 
-a = Analysis(
-    df=str(Path(__file__).parent.parent) +'/saved/All_Beauty_5.csv',
-    column_name="reviewText",date_column='reviewTime',vader=False
-    )
 
-a.review_analyze()
