@@ -6,5 +6,5 @@ insightsearch/data_clean.py
 insightsearch/dataframe_checking.py
 insightsearch/review.py
 insightsearch/sentiment_analyze.py
-LICENCE.txt
-README.md
+include LICENCE.txt
+include README.md
