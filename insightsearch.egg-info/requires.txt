@@ -1,0 +1,7 @@
+nltk
+pandas
+plotly
+spacy
+textblob
+transformers
+vaderSentiment

@@ -1,0 +1,15 @@
+LICENCE.txt
+MANIFEST.in
+README.md
+setup.py
+insightsearch/__init__.py
+insightsearch/aspect_analyze.py
+insightsearch/data_clean.py
+insightsearch/dataframe_checking.py
+insightsearch/review.py
+insightsearch/sentiment_analyze.py
+insightsearch.egg-info/PKG-INFO
+insightsearch.egg-info/SOURCES.txt
+insightsearch.egg-info/dependency_links.txt
+insightsearch.egg-info/requires.txt
+insightsearch.egg-info/top_level.txt
