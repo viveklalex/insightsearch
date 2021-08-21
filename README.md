@@ -37,7 +37,7 @@ ins.review_analyze()
 - **Overall sentiments** 
 ![alt text](https://github.com/vivekalex61/insightsearch/tree/master/insightsearch/test/overall_sentiments.png)
 - **Sentiment changes over period of time** 
-![alt text](https://github.com/vivekalex61/insightsearch/tree/master/insightsearch/test/overall_sentiments_monthly.png)
+![alt text](https://github.com/vivekalex61/insightsearch/tree/master/insightsearch/test/overall_sentiments_weekly.png)
 ![alt text](https://github.com/vivekalex61/insightsearch/tree/master/insightsearch/test/overall_sentiments_monthly.png)
 - **Aspects and opinions**
  
