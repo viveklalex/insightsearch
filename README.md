@@ -36,7 +36,7 @@ ins.review_analyze()
 ## Output
 - **Overall sentiments** 
 ![alt text](https://github.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments.png)
-- **Sentiment changes over period of time** 
+- **Sentiment score over the time period** 
 ![alt text](https://github.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments_weekly.png)
 ![alt text](https://github.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments_monthly.png)
 - **Aspects and opinions**
