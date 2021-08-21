@@ -35,17 +35,17 @@ ins.review_analyze()
 ```
 ## Output
 - **Overall sentiments** 
-![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments.png)
+![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/overall_sentiments.png)
 - **Sentiment score over the time period** 
-![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments_weekly.png)
-![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/overall_sentiments_monthly.png)
+![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/overall_sentiments_weekly.png)
+![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/overall_sentiments_monthly.png)
 - **Aspects and opinions**
  
-   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/aspect_opinions_1.png)
+   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/aspect_opinions_1.png)
 
-   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/aspect_opinions_2.png)
+   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/aspect_opinions_2.png)
 
-   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/blob/master/test/aspect_opinions_3.png)
+   ![alt text](https://raw.githubusercontent.com/vivekalex61/insightsearch/master/test/aspect_opinions_3.png)
 
 
 
