@@ -15,7 +15,7 @@ class Aspectanalyze(Sentimentanalyze):
         self.df = df
 
         self.column_name = column_name
-        self.lines = [l for l in self.df["reviewText"]]
+        self.lines = [l for l in self.df[self.column_name]]
 
     def _aspect_list(self, line, candidate_aspects, aspect_opinion_dict):
         blob = TextBlob(line)
