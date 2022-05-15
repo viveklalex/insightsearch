@@ -1,6 +1,13 @@
 import spacy
 from insightsearch.aspect_analyze import *
-nlp = spacy.load("en_core_web_lg")
+try:
+     nlp = spacy.load("en_core_web_lg")
+except:
+     print('downloading spacy en_core_web_lg')
+     spacy.cli.download("en_core_web_lg")
+     nlp = spacy.load("en_core_web_lg")
+nltk.download('stopwords')
+nltk.download('punkt')
 import regex as re
 import nltk
 import os
