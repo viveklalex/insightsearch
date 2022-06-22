@@ -244,7 +244,7 @@ class DataframeClean(Aspectanalyze):
         clean_df = self.file.copy().dropna()
 
         clean_df["reviewText"] = (
-            clean_df["reviewText"]
+            clean_df[self.column_name]
             .apply(lambda x: self.stop_words_removal(x, self.common_titles,self.wnl))
             .dropna()
         )
