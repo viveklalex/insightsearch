@@ -14,6 +14,8 @@ nltk.download('punkt')
 
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('all')
 nltk.download('wordnet', download_dir=str(Path(__file__).parent) +'/saved')
 nltk.data.path.append(str(Path(__file__).parent) +'/saved/corpora/wordnet')
 

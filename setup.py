@@ -4,7 +4,7 @@ readme_path=(pathlib.Path(__file__).parent / "README.md").read_text()
 setup(
 name = 'insightsearch',         # How you named your package folder (MyLib)
  packages = ['insightsearch'],   # Chose the same as "name"
- version = '2.0',      # Start with a small number and increase it with every change you make
+ version = '2.2',      # Start with a small number and increase it with every change you make
  license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
  
  description = 'Insightsearch will show sentiments, aspects and their opinions from your text/review data.',   # Give a short description about your library
