@@ -12,6 +12,9 @@ except:
 nltk.download('stopwords')
 nltk.download('punkt')
 
+nltk.download('wordnet')
+nltk.download('wordnet', download_dir=str(Path(__file__).parent) +'/saved')
+nltk.data.path.append(str(Path(__file__).parent) +'/saved/corpora/wordnet')
 
 if not os.path.exists(str(Path(__file__).parent) +'/saved/corpora/wordnet'):
 	nltk.download('wordnet', download_dir=str(Path(__file__).parent) +'/saved')
