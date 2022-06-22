@@ -21,202 +21,208 @@ class Aspectanalyze(Sentimentanalyze):
         blob = TextBlob(line)
 
         if len(candidate_aspects) > 0:
-            for a in candidate_aspects:
-                first_w_index = blob.words.index(a.split()[0])
+               try:
+                    for a in candidate_aspects:
+                        
+                        
+                        first_w_index = blob.words.index(a.split()[0])
+                        
 
-                last_w_index = blob.words.index(a.split()[-1])
+                        last_w_index = blob.words.index(a.split()[-1])
+                        
 
-                # chechking whether word_index-1 is adj if yes will add to list
-                pref_words = []
-                if self.index_valid(first_w_index - 1 , blob.tags):
-                    if blob.tags[first_w_index - 1][1] in [
-                       "RB",
-                        "RBR",
-                        "RBS",
-                        "JJ",
-                        "JJR",
-                        "JJS",
-                    ] and blob.tags[first_w_index - 1][0].lower().strip() not in [
-                        "very",
-                        "really","much"
-                    ]:
-
-                        if self.index_valid(first_w_index - 2, blob.tags) and blob.tags[first_w_index - 2][0].lower().strip() in [
-                               "not"] :
-
-                            pref_words.append(
-                               "not" + str(blob.tags[first_w_index - 1][0].lower().strip())
-                            )
-
-                        else:
-                            pref_words.append(
-                               blob.tags[first_w_index - 1][0].lower().strip()
-                            )
-
-
-
-
-
-                if len(pref_words) > 0:
-                    if self.index_valid(first_w_index - 2, blob.tags):
-                        if blob.tags[first_w_index - 2][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[first_w_index - 2][0].lower().strip() not in [
-                            "very",
-                            "really","much","and"
-                        ]:
-                            if self.index_valid(first_w_index - 3, blob.tags) and blob.tags[first_w_index - 3][0].lower().strip() in [
-                               "not"] :
-
-                                pref_words.append(
-                               "not" + str(blob.tags[first_w_index - 2][0].lower().strip())
-                            )
-
-                            else:
-                                pref_words.append(
-                               blob.tags[first_w_index - 2][0].lower().strip()
-
-                            )
-                    if self.index_valid(first_w_index - 2, blob.tags):
-                        if blob.tags[first_w_index - 2][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[first_w_index - 2][0].lower().strip() in [
-                            "and"
-                        ]:
-                            pref_words.append(
-                                blob.tags[first_w_index - 3][0].lower().strip()
-
-                            )
-
-                    if self.index_valid(first_w_index - 3, blob.tags):
-                        if blob.tags[first_w_index - 3][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[first_w_index - 3][0].lower().strip() not in [
-                            "very",
-                            "really","much","and"
-                        ]:
-                            pref_words.append(
-                                blob.tags[first_w_index - 3][0].lower().strip()
-                            )
-
-                attr = "".join(pref_words)
-                if str(a.strip()) in list(aspect_opinion_dict.keys()):
-
-                    aspect_opinion_dict[a] = " ".join(
-                        [aspect_opinion_dict[a] + " " + attr]
-                    ).strip()
-                else:
-                    aspect_opinion_dict[str(a.strip())] = attr
-
-                after_words = []
-
-                if self.index_valid(first_w_index + 1, blob.tags) and blob.words[first_w_index + 1].lower() in ["am", "is", "are", "was", "were"]:
-                    if self.index_valid(first_w_index + 2, blob.tags):
-
-                        if blob.tags[last_w_index + 2][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[last_w_index + 2][0].lower().strip() not in [
-                            "very",
-                            "really","always"
-                        ] :
-                            after_words.append(
-                                blob.tags[last_w_index + 2][0].lower().strip()
-                            )
-
-                    if self.index_valid(first_w_index + 3, blob.tags):
-
-                        if blob.tags[last_w_index + 3][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[last_w_index + 3][0].lower().strip() in [
-                            "and"
-
-                        ] :
-                            if self.index_valid(first_w_index + 4, blob.tags):
-
-                                after_words.append(
-                                    blob.tags[last_w_index + 4][0].lower().strip()
-                            )
-
-
-                    if len(after_words) > 0:
-                        if self.index_valid(first_w_index + 3, blob.tags):
-                            if blob.tags[last_w_index + 3][1] in [
-                                "RB",
+                        # chechking whether word_index-1 is adj if yes will add to list
+                        pref_words = []
+                        if self.index_valid(first_w_index - 1 , blob.tags):
+                            if blob.tags[first_w_index - 1][1] in [
+                               "RB",
                                 "RBR",
                                 "RBS",
                                 "JJ",
                                 "JJR",
                                 "JJS",
-                            ] and blob.tags[first_w_index + 3][0].lower().strip() not in [
+                            ] and blob.tags[first_w_index - 1][0].lower().strip() not in [
                                 "very",
-                                "really","much","and"
+                                "really","much"
                             ]:
-                                after_words.append(
-                                    blob.tags[last_w_index + 3][0].lower().strip()
-                                )
-                    if self.index_valid(first_w_index + 4, blob.tags):
-                        if blob.tags[last_w_index + 4][1] in [
-                            "RB",
-                            "RBR",
-                            "RBS",
-                            "JJ",
-                            "JJR",
-                            "JJS",
-                        ] and blob.tags[first_w_index + 3][0].lower().strip() in [
-                            "and"
-                        ]:
-                            if self.index_valid(first_w_index + 4, blob.tags):
 
-                                after_words.append(
-                                        blob.tags[last_w_index + 4][0].lower().strip()
-                            )
+                                if self.index_valid(first_w_index - 2, blob.tags) and blob.tags[first_w_index - 2][0].lower().strip() in [
+                                       "not"] :
+
+                                    pref_words.append(
+                                       "not" + str(blob.tags[first_w_index - 1][0].lower().strip())
+                                    )
+
+                                else:
+                                    pref_words.append(
+                                       blob.tags[first_w_index - 1][0].lower().strip()
+                                    )
 
 
 
-                    if self.index_valid(first_w_index + 2, blob.tags):
-                        if blob.tags[last_w_index + 2][0].lower() in ["very", "really"]:
+
+
+                        if len(pref_words) > 0:
+                            if self.index_valid(first_w_index - 2, blob.tags):
+                                if blob.tags[first_w_index - 2][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[first_w_index - 2][0].lower().strip() not in [
+                                    "very",
+                                    "really","much","and"
+                                ]:
+                                    if self.index_valid(first_w_index - 3, blob.tags) and blob.tags[first_w_index - 3][0].lower().strip() in [
+                                       "not"] :
+
+                                        pref_words.append(
+                                       "not" + str(blob.tags[first_w_index - 2][0].lower().strip())
+                                    )
+
+                                    else:
+                                        pref_words.append(
+                                       blob.tags[first_w_index - 2][0].lower().strip()
+
+                                    )
+                            if self.index_valid(first_w_index - 2, blob.tags):
+                                if blob.tags[first_w_index - 2][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[first_w_index - 2][0].lower().strip() in [
+                                    "and"
+                                ]:
+                                    pref_words.append(
+                                        blob.tags[first_w_index - 3][0].lower().strip()
+
+                                    )
+
+                            if self.index_valid(first_w_index - 3, blob.tags):
+                                if blob.tags[first_w_index - 3][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[first_w_index - 3][0].lower().strip() not in [
+                                    "very",
+                                    "really","much","and"
+                                ]:
+                                    pref_words.append(
+                                        blob.tags[first_w_index - 3][0].lower().strip()
+                                    )
+
+                        attr = "".join(pref_words)
+                        if str(a.strip()) in list(aspect_opinion_dict.keys()):
+
+                            aspect_opinion_dict[a] = " ".join(
+                                [aspect_opinion_dict[a] + " " + attr]
+                            ).strip()
+                        else:
+                            aspect_opinion_dict[str(a.strip())] = attr
+
+                        after_words = []
+
+                        if self.index_valid(first_w_index + 1, blob.tags) and blob.words[first_w_index + 1].lower() in ["am", "is", "are", "was", "were"]:
+                            if self.index_valid(first_w_index + 2, blob.tags):
+
+                                if blob.tags[last_w_index + 2][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[last_w_index + 2][0].lower().strip() not in [
+                                    "very",
+                                    "really","always"
+                                ] :
+                                    after_words.append(
+                                        blob.tags[last_w_index + 2][0].lower().strip()
+                                    )
 
                             if self.index_valid(first_w_index + 3, blob.tags):
-                                after_words.append(
-                                    blob.tags[last_w_index + 3][0].lower().strip()
-                                )
-                    attr = " ".join(after_words)
 
-                    if str(a.strip()) in list(aspect_opinion_dict.keys()):
+                                if blob.tags[last_w_index + 3][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[last_w_index + 3][0].lower().strip() in [
+                                    "and"
 
-                        aspect_opinion_dict[a] = " ".join(
-                            [aspect_opinion_dict[a] + " " + attr]
-                        ).strip()
+                                ] :
+                                    if self.index_valid(first_w_index + 4, blob.tags):
+
+                                        after_words.append(
+                                            blob.tags[last_w_index + 4][0].lower().strip()
+                                    )
+
+
+                            if len(after_words) > 0:
+                                if self.index_valid(first_w_index + 3, blob.tags):
+                                    if blob.tags[last_w_index + 3][1] in [
+                                        "RB",
+                                        "RBR",
+                                        "RBS",
+                                        "JJ",
+                                        "JJR",
+                                        "JJS",
+                                    ] and blob.tags[first_w_index + 3][0].lower().strip() not in [
+                                        "very",
+                                        "really","much","and"
+                                    ]:
+                                        after_words.append(
+                                            blob.tags[last_w_index + 3][0].lower().strip()
+                                        )
+                            if self.index_valid(first_w_index + 4, blob.tags):
+                                if blob.tags[last_w_index + 4][1] in [
+                                    "RB",
+                                    "RBR",
+                                    "RBS",
+                                    "JJ",
+                                    "JJR",
+                                    "JJS",
+                                ] and blob.tags[first_w_index + 3][0].lower().strip() in [
+                                    "and"
+                                ]:
+                                    if self.index_valid(first_w_index + 4, blob.tags):
+
+                                        after_words.append(
+                                                blob.tags[last_w_index + 4][0].lower().strip()
+                                    )
+
+
+
+                            if self.index_valid(first_w_index + 2, blob.tags):
+                                if blob.tags[last_w_index + 2][0].lower() in ["very", "really"]:
+
+                                    if self.index_valid(first_w_index + 3, blob.tags):
+                                        after_words.append(
+                                            blob.tags[last_w_index + 3][0].lower().strip()
+                                        )
+                            attr = " ".join(after_words)
+
+                            if str(a.strip()) in list(aspect_opinion_dict.keys()):
+
+                                aspect_opinion_dict[a] = " ".join(
+                                    [aspect_opinion_dict[a] + " " + attr]
+                                ).strip()
+                            else:
+                                aspect_opinion_dict[str(a).strip()] = attr
                     else:
-                        aspect_opinion_dict[str(a).strip()] = attr
-            else:
-                pass
-
+                        pass
+               except Exception as e:
+                        pass     
     def aspect_generator(self):
 
         self.candidate_aspects_dict = {}
