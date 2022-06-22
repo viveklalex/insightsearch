@@ -1,5 +1,8 @@
 import spacy
 from insightsearch.aspect_analyze import *
+import regex as re
+import nltk
+import os
 try:
      nlp = spacy.load("en_core_web_lg")
 except:
@@ -8,9 +11,7 @@ except:
      nlp = spacy.load("en_core_web_lg")
 nltk.download('stopwords')
 nltk.download('punkt')
-import regex as re
-import nltk
-import os
+
 
 if not os.path.exists(str(Path(__file__).parent) +'/saved/corpora/wordnet'):
 	nltk.download('wordnet', download_dir=str(Path(__file__).parent) +'/saved')

@@ -1,7 +1,7 @@
-nltk
-pandas
-plotly
-spacy
-textblob
 transformers
+spacy
+pandas
+nltk
+plotly
+textblob
 vaderSentiment
